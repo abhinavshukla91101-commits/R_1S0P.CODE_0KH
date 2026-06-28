@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream? // Supply Intake</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt-overlay"></div><div class="scanlines"></div>
+    <div class="container">
+        <header class="reveal"><h1 class="title-logo">Intake</h1><p class="subtitle">MATERIAL_DISPATCH_PORTAL</p></header>
+        <div class="nav-container reveal">
+            <nav class="terminal-nav">
+                <a href="index.html" class="nav-link">DB_DOSSIER</a>
+                <a href="supply-intake.html" class="nav-link active">SUPPLY_INTAKE</a>
+                <a href="register.html" class="nav-link">IDENTITY_REGISTRY</a>
+                <a href="login.html" class="nav-link">PORTAL_GATEWAY</a>
+            </nav>
+        </div>
+        <main>
+            <section class="modern-card reveal">
+                <h2>// SUBMIT GEOMETRY MATRIX</h2>
+                <form action="YOUR_RENDER_URL/upload" method="POST" enctype="multipart/form-data" class="submission-form">
+                    <div class="form-row">
+                        <div class="form-group reveal slide-left">
+                            <label>REGISTERED USERNAME</label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="form-group reveal slide-right">
+                            <label>MATERIAL CLASS</label>
+                            <select name="assetType" required>
+                                <option value="model">3D Asset (.fbx, .obj)</option>
+                                <option value="texture">Texture Map (.png)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group reveal">
+                        <label class="drag-drop-zone">
+                            <span>CLICK TO SELECT FILE FOR TRANSMISSION</span>
+                            <input type="file" name="assetFile" required>
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-btn">> TRANSMIT PAYLOAD</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="reveal.js"></script>
+</body>
+</html>
