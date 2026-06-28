@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream? // Terminal Auth</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt-overlay"></div><div class="scanlines"></div>
+    <div class="container" style="max-width: 400px; margin-top: 10%;">
+        <section class="modern-card reveal">
+            <h2>[ ACCESS GATEWAY ]</h2>
+            <form action="https://dream-web-backend.onrender.com/login" method="POST" class="submission-form">
+                <div class="form-group">
+                    <label>TERMINAL HANDLE</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>ACCESS KEY</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="submit-btn">> CONNECT TO TERMINAL</button>
+            </form>
+        </section>
+    </div>
+    <script src="reveal.js"></script>
+</body>
+</html>
