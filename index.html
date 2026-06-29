@@ -3,44 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream? // Database</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dream? // Central Portal Matrix</title>
+    <style>
+        :root {
+            --bg-main: #0a0a03;
+            --panel-bg: rgba(22, 22, 8, 0.9);
+            --neon-yellow: #dfcc74;
+            --dim-yellow: #5e542a;
+            --bright-glow: #fff0ad;
+            --alert-red: #ff3333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--neon-yellow); font-family: monospace; padding: 20px; }
+        .wrapper { max-width: 700px; margin: 5% auto; background: var(--panel-bg); border: 1px solid rgba(223, 204, 116, 0.2); border-radius: 12px; padding: 40px; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+        h1, h2, h3 { letter-spacing: 2px; margin-bottom: 20px; color: var(--bright-glow); }
+        p { line-height: 1.6; margin-bottom: 20px; color: #ccc; }
+        .btn { background: var(--neon-yellow); color: var(--bg-main); border: none; padding: 12px 24px; font-weight: bold; font-family: monospace; cursor: pointer; border-radius: 4px; transition: 0.3s ease; display: inline-block; }
+        .btn:hover { background: var(--bright-glow); box-shadow: 0 0 15px var(--neon-yellow); }
+        .btn-danger { background: var(--alert-red); color: #fff; }
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+        input[type="text"], input[type="email"], input[type="password"] { background: rgba(0,0,0,0.6); border: 1px solid var(--dim-yellow); padding: 12px; color: #fff; border-radius: 6px; font-family: monospace; width: 100%; }
+        .drop-zone { border: 2px dashed var(--dim-yellow); padding: 40px; text-align: center; border-radius: 8px; cursor: pointer; background: rgba(0,0,0,0.3); margin-top: 15px; }
+        .drop-zone.dragover { border-color: var(--bright-glow); background: rgba(223, 204, 116, 0.05); }
+        .coupon-box { background: rgba(223, 204, 116, 0.1); border: 2px dashed var(--neon-yellow); padding: 20px; border-radius: 6px; text-align: center; font-size: 1.4rem; color: #fff; margin-top: 20px; letter-spacing: 4px; }
+        .error-banner { background: rgba(255, 51, 51, 0.15); border: 1px solid var(--alert-red); color: #ff8888; padding: 15px; border-radius: 6px; margin-bottom: 20px; display: none; }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
-    <div class="crt-overlay"></div><div class="scanlines"></div>
-    <div class="container">
-        <header class="reveal">
-            <h1 class="title-logo">Dream?</h1>
-            <p class="subtitle">LEVEL_0_ARCHIVAL_MAIN_FRAME</p>
-        </header>
 
-        <div class="nav-container reveal">
-            <nav class="terminal-nav">
-                <a href="index.html" class="nav-link active">DB_DOSSIER</a>
-                <a href="supply-intake.html" class="nav-link">SUPPLY_INTAKE</a>
-                <a href="register.html" class="nav-link">IDENTITY_REGISTRY</a>
-                <a href="login.html" class="nav-link">PORTAL_GATEWAY</a>
-            </nav>
+    <div class="wrapper">
+        <div id="errorBanner" class="error-banner"></div>
+
+        <div id="viewGuest" class="view-section active">
+            <h1>[ LEVEL 0 MAIN ARCHIVAL PORTAL ]</h1>
+            <p><strong>Dream?</strong> is an upcoming psychological survival horror experience developed inside Unreal Engine. Navigate hyper-isolated architectures, manage hydration stabilization metrics under stress, and map anomalies while escaping anomalous psychological loops.</p>
+            <p style="color: var(--neon-yellow);"><strong>COUPON LOGISTICS ENGINE:</strong> Submit data pipelines to yield dynamic discount access keys. Providing an external Google Drive folder link provisions a complete <strong>10% total product voucher</strong>. Utilizing direct drag-and-drop file binaries incurs a data consolidation penalty, minimizing calculation output down to a <strong>5% coupon total</strong>.</p>
+            <button class="btn" onclick="switchView('viewAuth')">> ENGAGE RECONSTRUCTION HANDSHAKE</button>
         </div>
 
-        <main>
-            <section class="modern-card reveal">
-                <h2>// ARCHIVE LOG 01: SIMULATION PROFILE</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8;"><strong>Dream?</strong> is a solo-developed, atmospheric psychological survival horror game built in Unreal Engine. Straying away from typical monster-chase tropes, the game plunges players into the infinite, mind-numbing isolation of Level 0. Your greatest enemy isn't a creature lurking in the shadows—it is your own failing body and the crushing weight of solitude.</p>
-            </section>
-
-            <div class="features-grid">
-                <div class="feature-box reveal slide-left">
-                    <h3>[ DEHYDRATION METRICS ]</h3>
-                    <p>Scavenge for scattered bottles of Almond Water to slow physical crash loops. Every drop matters.</p>
-                </div>
-                <div class="feature-box reveal slide-right">
-                    <h3>[ PSYCHE FRAGMENTATION ]</h3>
-                    <p>Corridor saturation induces visual distortion, hallucinations, and deep environmental paranoia.</p>
-                </div>
+        <div id="viewAuth" class="view-section">
+            <h2>[ TERMINAL CONFIGURATION ACCESS ]</h2>
+            <p>Establish a verifiable data node record. Profile verification relies on strict mail activation authentication channels to isolate automated exploits.</p>
+            
+            <div class="form-group">
+                <label>CORE HANDLE REGISTRY (USERNAME)</label>
+                <input type="text" id="authUsername" autocomplete="off">
             </div>
-        </main>
+            <div class="form-group">
+                <label>EMAIL COMPONENT LINK VECTOR</label>
+                <input type="email" id="authEmail" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>SECURITY HANDSHAKE ENTRY CODE (PASSWORD)</label>
+                <input type="password" id="authPassword">
+            </div>
+
+            <button class="btn" onclick="runAuthSequence('register')">INITIALIZE ACCOUNT REGISTRY</button>
+            <button class="btn" onclick="runAuthSequence('login')" style="background:none; color:var(--neon-yellow); border:1px solid var(--dim-yellow); margin-left:10px;">SIGN IN TO REGISTERED NODE</button>
+        </div>
+
+        <div id="viewDashboard" class="view-section">
+            <h2>[ COMPUTATIONAL USER HUB MATRIX ]</h2>
+            <p>Identity confirmed smoothly. Active parameter stream validation: True. Choose an asset allocation vector layout beneath to resolve your digital code distribution adjustment criteria.</p>
+            
+            <hr style="border:0; border-top:1px solid var(--dim-yellow); margin:20px 0;">
+
+            <h3>OPTION A: TRANSIT TRACKING LINK LOCATION (10% DISCOUNT ENTITLEMENT)</h3>
+            <div class="form-group" style="margin-top:10px;">
+                <input type="text" id="driveLinkInput" placeholder="https://drive.google.com/drive/folders/..." autocomplete="off">
+            </div>
+            <button class="btn" onclick="transmitPayload('link')">DISPATCH DRIVE PATH REFERENCE</button>
+
+            <h3 style="margin-top:40px;">OPTION B: DRAG & DROP SOURCE COMPONENT ARCHIVE (5% SYSTEM REDUCTION PENALTY)</h3>
+            <div id="dropZone" class="drop-zone">
+                DRAG SOURCE DATA BINARY HERE OR INTERACT TO SELECT CONTENT VIA EXPLOITATION WINDOW
+                <input type="file" id="fileInput" style="display:none;">
+            </div>
+            <div id="fileSelectionName" style="margin-top:10px; color:#fff0ad; font-size:0.85rem;"></div>
+            <button class="btn" id="btnUploadFile" onclick="transmitPayload('file')" style="margin-top:15px; display:none;">DISPATCH DIRECT FILE BLOCK</button>
+        </div>
+
+        <div id="viewSuccess" class="view-section">
+            <h2>[ VOUCHER GENERATION SECURED ]</h2>
+            <p>The processing matrix completed your structural validation tasks successfully. Your secure coupon footprint allocation code parameter is available beneath:</p>
+            <div class="coupon-box" id="couponCodeDisplay">--------</div>
+            <p style="text-align:center; margin-top:15px; font-size:1.1rem;" id="discountRateDisplay">Calculated Value Metrics: 0%</p>
+            <br>
+            <button class="btn btn-danger" onclick="signOutTerminal()">TERMINATE NODE SESSION</button>
+        </div>
+
     </div>
-    <script src="reveal.js"></script>
+
+    <script>
+        // Synchronized backend domain parameters mapping
+        const BACKEND_URI = window.location.origin;
+
+        // ==========================================
+        // TARGET INTEGRATED LIVE CONFIGURATION MATRIX
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyBWewRlqA_qS3FbLnYp-YtdhWEZcYb6g94",
+            authDomain: "dream-game-portal.firebaseapp.com",
+            projectId: "dream-game-portal",
+            storageBucket: "dream-game-portal.firebasestorage.app",
+            messagingSenderId: "167909122071",
+            appId: "1:167909122071:web:a139c5e899a5baa880fc52"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        let clientIdentityIP = null;
+        let selectedUploadFile = null;
+
+        function displayError(msg) {
+            const banner = document.getElementById('errorBanner');
+            if(msg) {
+                banner.innerText = msg;
+                banner.style.display = 'block';
+                window.scrollTo(0,0);
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function switchView(viewId) {
+            displayError(null);
+            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Firebase Auth Sequence Interlinked with Backend Anti-Abuse Controls
+        async function runAuthSequence(mode) {
+            displayError(null);
+            const username = document.getElementById('authUsername').value.trim();
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+
+            if(!email || !password || (mode === 'register' && !username)) {
+                return displayError("Required execution input values are missing.");
+            }
+
+            try {
+                // IP Verification Step
+                const ipCheckRes = await fetch(`${BACKEND_URI}/api/security/ip-check`, { method: 'POST', headers: {'Content-Type':'application/json'} });
+                const ipCheck = await ipCheckRes.json();
+                
+                if(!ipCheckRes.ok) {
+                    return displayError(ipCheck.reason);
+                }
+                clientIdentityIP = ipCheck.ip;
+
+                if(mode === 'register') {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    await userCredential.user.sendEmailVerification();
+                    
+                    // Route profile configurations into internal JSON storage layout files
+                    await fetch(`${BACKEND_URI}/api/database/save-node`, {
+                        method: 'POST',
+                        headers: {'Content-Type':'application/json'},
+                        body: JSON.stringify({ uid: userCredential.user.uid, username, email, initialIP: clientIdentityIP })
+                    });
+                    
+                    alert("Verification email dispatched. Secure your link check via inbox before logging inside your terminal node.");
+                    await auth.signOut();
+                } else {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    
+                    if(!userCredential.user.emailVerified) {
+                        await auth.signOut();
+                        return displayError("Access Forbidden: Your account verified link matrix parameter check dropped.");
+                    }
+
+                    // Query Database file log verification properties
+                    const checkNodeRes = await fetch(`${BACKEND_URI}/api/database/check-node/${userCredential.user.uid}`);
+                    const nodeCheck = await checkNodeRes.json();
+
+                    if(nodeCheck.registered && nodeCheck.data.couponClaimed) {
+                        document.getElementById('couponCodeDisplay').innerText = "VOUCHER EXHAUSTED";
+                        document.getElementById('discountRateDisplay').innerText = `Allocated Balance Footprint: ${nodeCheck.data.grantedDiscount}`;
+                        return switchView('viewSuccess');
+                    }
+                    switchView('viewDashboard');
+                }
+            } catch(err) {
+                displayError(err.message);
+            }
+        }
+
+        // Continual Auth Verification loop check processes
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                if(user.emailVerified) {
+                    const checkNodeRes = await fetch(`${BACKEND_URI}/api/database/check-node/${user.uid}`);
+                    const nodeCheck = await checkNodeRes.json();
+                    if(nodeCheck.registered && nodeCheck.data.couponClaimed) {
+                        document.getElementById('couponCodeDisplay').innerText = "VOUCHER EXHAUSTED";
+                        document.getElementById('discountRateDisplay').innerText = `Allocated Balance Footprint: ${nodeCheck.data.grantedDiscount}`;
+                        switchView('viewSuccess');
+                    } else {
+                        switchView('viewDashboard');
+                    }
+                }
+            } else {
+                switchView('viewGuest');
+            }
+        });
+
+        // Config drag interface handlers
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => processFileHook(e.target.files[0]));
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            processFileHook(e.dataTransfer.files[0]);
+        });
+
+        function processFileHook(file) {
+            if(file) {
+                selectedUploadFile = file;
+                document.getElementById('fileSelectionName').innerText = `TARGET OBJECT STAGED: ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`;
+                document.getElementById('btnUploadFile').style.display = 'inline-block';
+            }
+        }
+
+        // Transmit values payload data arrays to calculate variable coupon structures
+        async function transmitPayload(type) {
+            displayError(null);
+            const currentUser = auth.currentUser;
+            if(!currentUser) return displayError("Identity credentials expired or corrupted.");
+
+            const formData = new FormData();
+            formData.append('uid', currentUser.uid);
+            formData.append('methodType', type);
+
+            if(type === 'link') {
+                const linkVal = document.getElementById('driveLinkInput').value.trim();
+                if(!linkVal) return displayError("Input location address criteria missing data details.");
+                formData.append('driveLink', linkVal);
+            } else if(type === 'file') {
+                if(!selectedUploadFile) return displayError("Missing target raw component asset configuration parameters.");
+                formData.append('droppedFile', selectedUploadFile);
+            }
+
+            try {
+                const res = await fetch(`${BACKEND_URI}/api/dispatch/payload`, { method: 'POST', body: formData });
+                const output = await res.json();
+
+                if(!res.ok) return displayError(output.error || "Execution processing sequence timeout failure.");
+
+                document.getElementById('couponCodeDisplay').innerText = output.coupon;
+                document.getElementById('discountRateDisplay').innerText = `Structural Allocation Discount Provisioned: ${output.discount}`;
+                switchView('viewSuccess');
+            } catch(err) {
+                displayError("Transmission processing error exception.");
+            }
+        }
+
+        function signOutTerminal() {
+            auth.signOut().then(() => switchView('viewGuest'));
+        }
+    </script>
 </body>
 </html>
